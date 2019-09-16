@@ -1,3 +1,4 @@
+import org.jetbrains.kotlin.gradle.plugin.KotlinSourceSet
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 plugins {
@@ -32,6 +33,10 @@ dependencies {
     testImplementation("io.projectreactor:reactor-test")
 }
 
+sourceSets["test"].withConvention(KotlinSourceSet::class) {
+    kotlin.srcDirs("src/test/unit/kotlin", "src/test/integration/kotlin")
+}
+
 tasks.test {
     useJUnitPlatform {
         includeEngines("junit-jupiter")
@@ -44,4 +49,3 @@ tasks.withType<KotlinCompile> {
         jvmTarget = "1.8"
     }
 }
-
