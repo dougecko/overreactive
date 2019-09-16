@@ -5,6 +5,7 @@ plugins {
     id("io.spring.dependency-management") version "1.0.8.RELEASE"
     kotlin("jvm") version "1.3.50"
     kotlin("plugin.spring") version "1.3.50"
+    id("org.unbroken-dome.test-sets") version "2.1.1"
 }
 
 group = "com.shinesolutions.poc"
@@ -45,3 +46,8 @@ tasks.withType<KotlinCompile> {
     }
 }
 
+tasks.testSets {
+    integrationTest {
+        dirName = "integration-test"
+    }
+}
