@@ -26,9 +26,16 @@ dependencies {
     testImplementation("org.springframework.boot:spring-boot-starter-test") {
         exclude(module = "junit")
     }
-    testImplementation("org.junit.jupiter:junit-jupiter-api:5.5.2")
-    testImplementation("io.projectreactor:reactor-test")
     testImplementation("com.nhaarman.mockitokotlin2:mockito-kotlin:2.2.0")
+    testImplementation("org.junit.jupiter:junit-jupiter:5.5.2")
+    testImplementation("org.mockito:mockito-junit-jupiter:3.0.0")
+    testImplementation("io.projectreactor:reactor-test")
+}
+
+tasks.test {
+    useJUnitPlatform {
+        includeEngines("junit-jupiter")
+    }
 }
 
 tasks.withType<KotlinCompile> {
