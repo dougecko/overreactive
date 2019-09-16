@@ -2,7 +2,7 @@ package com.shinesolutions.poc.overreactive.accounts.controller
 
 import com.nhaarman.mockitokotlin2.whenever
 import com.shinesolutions.poc.overreactive.accounts.model.Account
-import com.shinesolutions.poc.overreactive.accounts.service.AccountService
+import com.shinesolutions.poc.overreactive.accounts.service.NonReactiveAccountService
 import com.shinesolutions.poc.overreactive.exceptions.ResourceNotFoundException
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Assertions.assertThrows
@@ -14,43 +14,41 @@ import org.mockito.Mockito.verify
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.context.SpringBootTest
 import org.springframework.test.context.junit.jupiter.SpringExtension
-import reactor.core.publisher.Flux
-import reactor.core.publisher.Mono
 
 @ExtendWith(SpringExtension::class)
 @SpringBootTest
-class ReactiveAccountControllerTests {
+class NonReactiveAccountControllerTests {
 
     @Mock
-    lateinit var accountService: AccountService
+    lateinit var accountService: NonReactiveAccountService
 
     @Autowired
-    lateinit var accountController: AccountController
+    lateinit var accountController: NonReactiveAccountController
 
     @BeforeEach
     fun init() {
-        accountController = AccountController(accountService)
+        accountController = NonReactiveAccountController(accountService)
     }
 
     @Test
-    fun whenGetAllAccounts_thenReactiveServiceFindAllCalled() {
-        whenever(accountService.findAll()).thenReturn(Flux.just(Account.ACCOUNTS))
-        val accounts: Flux<List<Account>> = accountController.getAccountsList()
-        assertEquals(3, accounts.blockFirst()?.size)
+    fun whenGetAllAccounts_thenNonReactiveServiceFindAllCalled() {
+        whenever(accountService.findAll()).thenReturn(Account.ACCOUNTS)
+        val accounts: List<Account> = accountController.getAccountsList()
+        assertEquals(3, accounts.size)
 
         verify(accountService).findAll()
     }
 
     @Test
-    fun whenGetIndividualAccount_thenReactiveServiceFindOneCalled() {
-        whenever(accountService.findOne(1L)).thenReturn(Mono.just(Account.ACCOUNTS[0]))
-        val account: Mono<Account> = accountController.getAccount(1L)
-        assertEquals("Savings Account", account.block()?.name)
+    fun whenGetIndividualAccount_thenNonReactiveServiceFindOneCalled() {
+        whenever(accountService.findOne(1L)).thenReturn(Account.ACCOUNTS[0])
+        val account: Account = accountController.getAccount(1L)
+        assertEquals("Savings Account", account.name)
         verify(accountService).findOne(1L)
     }
 
     @Test
-    fun whenGetUnknownIndividualAccount_thenReactiveServiceFindOneCalledAndExceptionThrown() {
+    fun whenGetUnknownIndividualAccount_thenNonReactiveServiceFindOneCalledAndExceptionThrown() {
         whenever(accountService.findOne(200L)).thenThrow(ResourceNotFoundException())
         assertThrows(ResourceNotFoundException::class.java) {
             accountController.getAccount(200L)

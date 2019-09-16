@@ -14,29 +14,18 @@ import org.springframework.web.bind.annotation.RestController
 import reactor.core.publisher.Flux
 import reactor.core.publisher.Mono
 
-@RestController
-class AccountController(@Autowired val accountService: AccountService,
-                        @Autowired val nrAccountService: NonReactiveAccountService) {
+@RestController("/accounts")
+class AccountController(@Autowired val accountService: AccountService) {
 
     ///// REACTIVE ENDPOINTS
-    @GetMapping("/accounts")
+    @GetMapping
     fun getAccountsList(): Flux<List<Account>> = accountService.findAll()
 
-    @GetMapping("/accounts/{id}")
+    @GetMapping("/{id}")
     fun getAccount(@PathVariable("id") id: Long): Mono<Account> = accountService.findOne(id)
 
     @ResponseStatus(HttpStatus.CREATED)
-    @PostMapping("/accounts")
+    @PostMapping
     fun createAccount(@RequestBody account: Account): Mono<Account> = accountService.create(account)
 
-    ///// NON-REACTIVE ENDPOINTS
-    @GetMapping("/nr/accounts")
-    fun getNonReactiveAccountsList(): List<Account> = nrAccountService.findAll()
-
-    @GetMapping("/nr/accounts/{id}")
-    fun getNonReactiveAccount(@PathVariable("id") id: Long) = accountService.findOne(id)
-
-    @ResponseStatus(HttpStatus.CREATED)
-    @PostMapping("/nr/accounts")
-    fun createNonReactiveAccount(@RequestBody account: Account) = accountService.create(account)
 }

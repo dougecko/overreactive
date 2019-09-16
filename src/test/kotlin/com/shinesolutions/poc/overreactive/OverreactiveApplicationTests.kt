@@ -5,7 +5,6 @@ import com.nhaarman.mockitokotlin2.whenever
 import com.shinesolutions.poc.overreactive.accounts.controller.AccountController
 import com.shinesolutions.poc.overreactive.accounts.model.Account
 import com.shinesolutions.poc.overreactive.accounts.service.AccountService
-import com.shinesolutions.poc.overreactive.accounts.service.NonReactiveAccountService
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.extension.ExtendWith
 import org.mockito.Mockito.verify
@@ -25,13 +24,12 @@ class OverreactiveApplicationTests {
     fun getAllAccountsReactive() {
         val accountServiceMock: AccountService = mock()
         whenever(accountServiceMock.findAll()).thenReturn(Flux.just(Account.ACCOUNTS))
-        val nonReactiveAccountServiceMock: NonReactiveAccountService = mock() // unused
-        val accountController = AccountController(accountServiceMock, nonReactiveAccountServiceMock)
+        val accountController = AccountController(accountServiceMock)
         val accountsList = accountController.getAccountsList().blockFirst()
 
         verify(accountServiceMock).findAll()
         assert(accountsList?.size == 3) { "There should be three accounts" }
-		assert(accountsList?.get(0)?.name == "Savings Account") { "The first account should be Savings" }
-	}
+        assert(accountsList?.get(0)?.name == "Savings Account") { "The first account should be Savings" }
+    }
 
 }
