@@ -5,15 +5,19 @@ import com.shinesolutions.poc.overreactive.accounts.model.Account
 import com.shinesolutions.poc.overreactive.accounts.model.CreditAccount
 import com.shinesolutions.poc.overreactive.accounts.model.DomesticAccount
 import com.shinesolutions.poc.overreactive.accounts.model.HomeLoanAccount
+import com.shinesolutions.poc.overreactive.accounts.repository.AccountRepository
 import com.shinesolutions.poc.overreactive.exceptions.ResourceNotFoundException
+import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Service
 import reactor.core.publisher.Flux
 import reactor.core.publisher.Mono
 
 @Service
-class AccountService {
+class AccountService(@Autowired val accountRepository: AccountRepository) {
 
-    fun findAll(): Flux<List<Account>> = Flux.just(Account.ACCOUNTS)
+    fun findAll(): Flux<List<Account>> {
+        return accountRepository.findAll()
+    }
 
     fun findOne(id: Long): Mono<Account> = Mono.just(Account.ACCOUNTS.firstOrNull { account ->
         account.id == id

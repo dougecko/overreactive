@@ -1,8 +1,7 @@
-package com.shinesolutions.poc.overreactive.accounts.controller
+package com.shinesolutions.poc.overreactive.unit.controller
 
 import com.shinesolutions.poc.overreactive.accounts.model.Account
 import com.shinesolutions.poc.overreactive.accounts.service.AccountService
-import com.shinesolutions.poc.overreactive.accounts.service.NonReactiveAccountService
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.http.HttpStatus
 import org.springframework.web.bind.annotation.GetMapping
