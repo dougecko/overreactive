@@ -10,7 +10,34 @@ jobs:
       - image: circleci/postgres:12-alpine
         environment:
           POSTGRES_USER: postgres
-          POSTGRES_DB: circle_test
+          POSTGRES_DB: overreactive
     steps:
       - checkout # check out the code in the project directory
+      # Read about caching dependencies: https://circleci.com/docs/2.0/caching/
+      - restore_cache:
+          key: v1-gradle-wrapper-{{ checksum "gradle/wrapper/gradle-wrapper.properties" }}
+      - restore_cache:
+          key: v1-gradle-cache-{{ checksum "build.gradle" }}
       - run: ./gradlew clean build test
+      - save_cache:
+          paths:
+            - ~/.gradle/wrapper
+          key: v1-gradle-wrapper-{{ checksum "gradle/wrapper/gradle-wrapper.properties" }}
+      - save_cache:
+          paths:
+            - ~/.gradle/caches
+          key: v1-gradle-cache-{{ checksum "build.gradle" }}
+      - store_test_results:
+          # Upload test results for display in Test Summary: https://circleci.com/docs/2.0/collect-test-data/
+          path: build/test-results/test
+      - store_artifacts: # Upload test results for display in Artifacts: https://circleci.com/docs/2.0/artifacts/
+          path: build/test-results/test
+          when: always
+      - run: ./gradlew assemble
+      - store_artifacts:
+          path: build/libs
+workflows:
+  version: 2
+  workflow:
+    jobs:
+      - build
