@@ -32,4 +32,11 @@ class AccountController(@Autowired val accountService: AccountService,
     ///// NON-REACTIVE ENDPOINTS
     @GetMapping("/nr/accounts")
     fun getNonReactiveAccountsList(): List<Account> = nrAccountService.findAll()
+
+    @GetMapping("/nr/accounts/{id}")
+    fun getNonReactiveAccount(@PathVariable("id") id: Long) = accountService.findOne(id)
+
+    @ResponseStatus(HttpStatus.CREATED)
+    @PostMapping("/nr/accounts")
+    fun createNonReactiveAccount(@RequestBody account: Account) = accountService.create(account)
 }
