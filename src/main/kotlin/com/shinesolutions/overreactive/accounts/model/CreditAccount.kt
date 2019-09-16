@@ -4,7 +4,7 @@ import java.time.LocalDate
 
 data class CreditAccount(
 
-        override val id: Long,
+        override val id: Long?,
         override val name: String,
         override val type: AccountType = AccountType.CREDIT,
         override var balance: Float,

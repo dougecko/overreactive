@@ -1,9 +1,11 @@
 package com.shinesolutions.overreactive.accounts.controller
 
+import com.nhaarman.mockitokotlin2.any
 import com.nhaarman.mockitokotlin2.whenever
 import com.shinesolutions.overreactive.accounts.model.Account
 import com.shinesolutions.overreactive.accounts.service.AccountService
 import com.shinesolutions.overreactive.exceptions.ResourceNotFoundException
+import org.junit.jupiter.api.Assertions
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Assertions.assertThrows
 import org.junit.jupiter.api.BeforeEach
@@ -30,6 +32,7 @@ class ReactiveAccountControllerTests {
     @BeforeEach
     fun init() {
         accountController = AccountController(accountService)
+        Account.resetAccounts()
     }
 
     @Test
@@ -57,5 +60,14 @@ class ReactiveAccountControllerTests {
         }
 
         verify(accountService).findOne(200L)
+    }
+
+    @Test
+    fun whenPostNewAccount_thenCreateCalled() {
+        whenever(accountService.create(any())).thenReturn(Mono.just(Account.getCreditAccount(4L)))
+        val account = accountController.createAccount(Account.getCreditAccount(null)).block()
+        Assertions.assertNotEquals(null, account?.id)
+        assertEquals("My Platinum Reward VISA", account?.name)
+        verify(accountService).create(any())
     }
 }

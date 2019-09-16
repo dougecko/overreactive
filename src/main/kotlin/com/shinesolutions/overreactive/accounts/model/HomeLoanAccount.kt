@@ -4,7 +4,7 @@ import java.time.LocalDate
 
 data class HomeLoanAccount(
 
-        override val id: Long,
+        override val id: Long?,
         override val name: String,
         override val type: AccountType = AccountType.HOME_LOAN,
         override var balance: Float,
