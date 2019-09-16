@@ -1,4 +1,4 @@
-package com.shinesolutions.overreactive.unit.controller
+package com.shinesolutions.overreactive.accounts.controller
 
 import com.shinesolutions.overreactive.accounts.model.Account
 import com.shinesolutions.overreactive.accounts.service.NonReactiveAccountService
