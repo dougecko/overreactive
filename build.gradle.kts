@@ -1,3 +1,4 @@
+import org.jetbrains.kotlin.gradle.plugin.KotlinSourceSet
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 plugins {
@@ -5,7 +6,6 @@ plugins {
     id("io.spring.dependency-management") version "1.0.8.RELEASE"
     kotlin("jvm") version "1.3.50"
     kotlin("plugin.spring") version "1.3.50"
-    id("org.unbroken-dome.test-sets") version "2.1.1"
 }
 
 group = "com.shinesolutions.poc"
@@ -33,6 +33,10 @@ dependencies {
     testImplementation("io.projectreactor:reactor-test")
 }
 
+sourceSets["test"].withConvention(KotlinSourceSet::class) {
+    kotlin.srcDirs("src/test/unit/kotlin", "src/test/integration/kotlin")
+}
+
 tasks.test {
     useJUnitPlatform {
         includeEngines("junit-jupiter")
@@ -43,11 +47,5 @@ tasks.withType<KotlinCompile> {
     kotlinOptions {
         freeCompilerArgs = listOf("-Xjsr305=strict")
         jvmTarget = "1.8"
-    }
-}
-
-tasks.testSets {
-    integrationTest {
-        dirName = "integration-test"
     }
 }
