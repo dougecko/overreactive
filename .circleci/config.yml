@@ -28,7 +28,7 @@ jobs:
       - store_test_results:
           path: ~/test-results
       - store_artifacts:
-          path: ~/test-results/junit
+          path: build/reports/tests
       - run: ./gradlew assemble
       - store_artifacts:
           path: build/libs
