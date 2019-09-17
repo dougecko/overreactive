@@ -1,9 +1,13 @@
+
+import org.gradle.api.tasks.testing.logging.TestExceptionFormat
+import org.gradle.api.tasks.testing.logging.TestLogEvent
 import org.jetbrains.kotlin.gradle.plugin.KotlinSourceSet
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 plugins {
     id("org.springframework.boot") version "2.1.8.RELEASE"
     id("io.spring.dependency-management") version "1.0.8.RELEASE"
+    java
     kotlin("jvm") version "1.3.50"
     kotlin("plugin.spring") version "1.3.50"
 }
@@ -40,6 +44,42 @@ sourceSets["test"].withConvention(KotlinSourceSet::class) {
 tasks.test {
     useJUnitPlatform {
         includeEngines("junit-jupiter")
+    }
+
+    testLogging {
+        events = mutableSetOf(
+                TestLogEvent.FAILED,
+                TestLogEvent.PASSED,
+                TestLogEvent.SKIPPED,
+                TestLogEvent.STANDARD_OUT)
+        exceptionFormat = TestExceptionFormat.FULL
+        showExceptions = true
+        showCauses = true
+        showStackTraces = true
+
+        debug {
+            events = mutableSetOf(
+                    TestLogEvent.STARTED,
+                    TestLogEvent.FAILED,
+                    TestLogEvent.PASSED,
+                    TestLogEvent.SKIPPED,
+                    TestLogEvent.STANDARD_ERROR,
+                    TestLogEvent.STANDARD_OUT)
+            exceptionFormat = TestExceptionFormat.FULL
+        }
+
+        info.events = debug.events
+        info.exceptionFormat = debug.exceptionFormat
+
+        afterSuite(KotlinClosure2<TestDescriptor, TestResult, Unit>({desc, result ->
+            if (desc.parent == null) { // will match the outermost suite
+                val output = "Results: ${result.resultType} (${result.testCount} tests, ${result.successfulTestCount} successes, ${result.failedTestCount} failures, ${result.skippedTestCount} skipped)"
+                val startItem = "|  "
+                val endItem = "  |"
+                val repeatLength = startItem.length + output.length + endItem.length
+                println('\n' + "-".repeat(repeatLength) + '\n' + startItem + output + endItem + '\n' + "-".repeat(repeatLength))
+            }
+        }))
     }
 }
 
