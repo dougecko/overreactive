@@ -1,15 +1,14 @@
 package com.shinesolutions.overreactive.accounts.repository
 
 import com.shinesolutions.overreactive.accounts.model.Account
-import org.springframework.data.r2dbc.repository.R2dbcRepository
-import org.springframework.data.r2dbc.repository.query.Query
-import org.springframework.stereotype.Repository
+import org.springframework.stereotype.Component
 import reactor.core.publisher.Flux
 
-@Repository
-interface AccountRepository : R2dbcRepository<Account, Int> {
+@Component
+class AccountRepository {
 
-    @Query("SELECT * FROM account WHERE name = $1")
-    fun findAllByName(): Flux<Account>
+    fun findAll(): Flux<Account> {
+        return Flux.fromIterable(Account.ACCOUNTS)
+    }
 
 }
