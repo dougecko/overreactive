@@ -1,5 +1,6 @@
 import org.jetbrains.kotlin.gradle.plugin.KotlinSourceSet
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
+import java.net.URI
 
 plugins {
     id("org.springframework.boot") version "2.1.8.RELEASE"
@@ -14,11 +15,13 @@ java.sourceCompatibility = JavaVersion.VERSION_1_8
 
 repositories {
     mavenCentral()
+    maven { url = URI("http://repo.spring.io/libs-milestone") }
 }
 
 dependencies {
     implementation("org.springframework.boot:spring-boot-starter-webflux")
-//	implementation("org.springframework.data:spring-data-r2dbc:1.0.0.M2")
+    implementation("org.springframework.data:spring-data-r2dbc:1.0.0.M2")
+    implementation("io.r2dbc:r2dbc-postgresql:1.0.0.M6")
     implementation("com.fasterxml.jackson.module:jackson-module-kotlin")
 
     implementation("org.jetbrains.kotlin:kotlin-reflect")

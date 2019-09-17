@@ -18,7 +18,7 @@ class AccountController(@Autowired val accountService: AccountService) {
 
     ///// REACTIVE ENDPOINTS
     @GetMapping
-    fun getAccountsList(): Flux<List<Account>> = accountService.findAll()
+    fun getAccountsList(): Flux<Account> = accountService.findAll()
 
     @GetMapping("/{id}")
     fun getAccount(@PathVariable("id") id: Long): Mono<Account> = accountService.findOne(id)

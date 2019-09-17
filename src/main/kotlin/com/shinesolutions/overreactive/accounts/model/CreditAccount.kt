@@ -1,7 +1,9 @@
 package com.shinesolutions.overreactive.accounts.model
 
+import org.springframework.data.relational.core.mapping.Table
 import java.time.LocalDate
 
+@Table("credit_account")
 data class CreditAccount(
 
         override val id: Long?,

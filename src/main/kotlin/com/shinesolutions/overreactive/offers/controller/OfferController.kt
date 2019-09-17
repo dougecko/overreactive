@@ -13,7 +13,7 @@ import reactor.core.publisher.Mono
 class OfferController(@Autowired val offerService: OfferService) {
 
     @GetMapping("/offers")
-    fun getOffersList(): Flux<List<Offer>> = offerService.findAll()
+    fun getOffersList(): Flux<Offer> = offerService.findAll()
 
     @GetMapping("/offers/{id}")
     fun getOffer(@PathVariable("id") id: Long): Mono<Offer> = offerService.findOne(id)

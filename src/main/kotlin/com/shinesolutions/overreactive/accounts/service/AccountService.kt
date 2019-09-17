@@ -13,9 +13,11 @@ import reactor.core.publisher.Flux
 import reactor.core.publisher.Mono
 
 @Service
-class AccountService(@Autowired val accountRepository: AccountRepository) {
+class AccountService @Autowired constructor(
+        private val accountRepository: AccountRepository
+) {
 
-    fun findAll(): Flux<List<Account>> {
+    fun findAll(): Flux<Account> {
         return accountRepository.findAll()
     }
 

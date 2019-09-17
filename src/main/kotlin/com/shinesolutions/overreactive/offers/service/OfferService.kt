@@ -9,7 +9,7 @@ import reactor.core.publisher.Mono
 @Service
 class OfferService {
 
-    fun findAll(): Flux<List<Offer>> = Flux.just(Offer.OFFERS)
+    fun findAll(): Flux<Offer> = Flux.fromIterable(Offer.OFFERS)
 
     fun findOne(id: Long) = Mono.just(Offer.OFFERS.firstOrNull { offer ->
         offer.id == id

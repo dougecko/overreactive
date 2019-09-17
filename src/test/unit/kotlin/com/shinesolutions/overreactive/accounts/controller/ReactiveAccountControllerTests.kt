@@ -37,19 +37,20 @@ class ReactiveAccountControllerTests {
 
     @Test
     fun whenGetAllAccounts_thenReactiveServiceFindAllCalled() {
-        whenever(accountService.findAll()).thenReturn(Flux.just(Account.ACCOUNTS))
-        val accounts: Flux<List<Account>> = accountController.getAccountsList()
-        assertEquals(3, accounts.blockFirst()?.size)
+        whenever(accountService.findAll()).thenReturn(Flux.fromIterable(Account.ACCOUNTS))
+        val accounts: Flux<Account> = accountController.getAccountsList()
 
         verify(accountService).findAll()
+        assertEquals(3, accounts.collectList().block()?.size)
     }
 
     @Test
     fun whenGetIndividualAccount_thenReactiveServiceFindOneCalled() {
         whenever(accountService.findOne(1L)).thenReturn(Mono.just(Account.ACCOUNTS[0]))
         val account: Mono<Account> = accountController.getAccount(1L)
-        assertEquals("Savings Account", account.block()?.name)
+
         verify(accountService).findOne(1L)
+        assertEquals("Savings Account", account.block()?.name)
     }
 
     @Test

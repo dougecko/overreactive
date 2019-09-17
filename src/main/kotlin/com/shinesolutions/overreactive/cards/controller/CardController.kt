@@ -15,7 +15,7 @@ class CardController(@Autowired val cardService: CardService,
 
     ///// REACTIVE ENDPOINTS
     @GetMapping("/cards")
-    fun getCardList(): Flux<List<Card>> = cardService.findAll()
+    fun getCardList(): Flux<Card> = cardService.findAll()
 
     @GetMapping("/cards/{id}")
     fun getCard(@PathVariable("id") id: Long): Mono<Card> = cardService.findOne(id)

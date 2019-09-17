@@ -9,7 +9,7 @@ import reactor.core.publisher.Mono
 @Service
 class CardService {
 
-    fun findAll(): Flux<List<Card>> = Flux.just(Card.CARDS)
+    fun findAll(): Flux<Card> = Flux.fromIterable(Card.CARDS)
 
     fun findOne(id: Long) = Mono.just(Card.CARDS.firstOrNull { card ->
         card.id == id

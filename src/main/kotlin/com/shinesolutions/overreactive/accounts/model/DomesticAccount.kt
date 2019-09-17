@@ -1,7 +1,9 @@
 package com.shinesolutions.overreactive.accounts.model
 
+import org.springframework.data.relational.core.mapping.Table
 import java.time.LocalDate
 
+@Table("domestic_account")
 data class DomesticAccount(
 
         override val id: Long?,
