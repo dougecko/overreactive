@@ -1,21 +1,14 @@
 package com.shinesolutions.overreactive.accounts.service
 
-import com.shinesolutions.overreactive.accounts.model.AccountType
-import com.shinesolutions.overreactive.accounts.model.Account
-import com.shinesolutions.overreactive.accounts.model.CreditAccount
-import com.shinesolutions.overreactive.accounts.model.DomesticAccount
-import com.shinesolutions.overreactive.accounts.model.HomeLoanAccount
+import com.shinesolutions.overreactive.accounts.model.*
 import com.shinesolutions.overreactive.accounts.repository.AccountRepository
 import com.shinesolutions.overreactive.exceptions.ResourceNotFoundException
-import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Service
 import reactor.core.publisher.Flux
 import reactor.core.publisher.Mono
 
 @Service
-class AccountService @Autowired constructor(
-        private val accountRepository: AccountRepository
-) {
+class AccountService(private val accountRepository: AccountRepository) {
 
     fun findAll(): Flux<Account> {
         return accountRepository.findAll()

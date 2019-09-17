@@ -14,9 +14,8 @@ import reactor.core.publisher.Flux
 import reactor.core.publisher.Mono
 
 @RestController("/accounts")
-class AccountController(@Autowired val accountService: AccountService) {
+class AccountController(private val accountService: AccountService) {
 
-    ///// REACTIVE ENDPOINTS
     @GetMapping
     fun getAccountsList(): Flux<Account> = accountService.findAll()
 

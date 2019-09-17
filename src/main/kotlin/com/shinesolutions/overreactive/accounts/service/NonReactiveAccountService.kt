@@ -1,12 +1,17 @@
 package com.shinesolutions.overreactive.accounts.service
 
 import com.shinesolutions.overreactive.accounts.model.*
+import com.shinesolutions.overreactive.accounts.repository.NonReactiveAccountRepository
 import com.shinesolutions.overreactive.exceptions.ResourceNotFoundException
+import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Component
 
 @Component
-class NonReactiveAccountService {
-    fun findAll() = Account.ACCOUNTS
+class NonReactiveAccountService(@Autowired private val nonReactiveAccountRepository: NonReactiveAccountRepository) {
+
+    fun findAll(): Iterable<Account> {
+        return nonReactiveAccountRepository.findAll()
+    }
 
     fun findOne(id: Long) = Account.ACCOUNTS.firstOrNull { account ->
         account.id == id

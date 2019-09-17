@@ -34,8 +34,8 @@ class NonReactiveAccountControllerTests {
     @Test
     fun whenGetAllAccounts_thenNonReactiveServiceFindAllCalled() {
         whenever(accountService.findAll()).thenReturn(Account.ACCOUNTS)
-        val accounts: List<Account> = accountController.getAccountsList()
-        assertEquals(3, accounts.size)
+        val accounts: Iterable<Account> = accountController.getAccountsList()
+        assertEquals(3, accounts.count())
 
         verify(accountService).findAll()
     }

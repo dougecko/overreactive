@@ -25,7 +25,7 @@ repositories {
 dependencies {
     implementation("org.springframework.boot:spring-boot-starter-webflux")
     implementation("org.springframework.data:spring-data-r2dbc:1.0.0.M2")
-    implementation("io.r2dbc:r2dbc-postgresql:1.0.0.M6")
+    implementation("io.r2dbc:r2dbc-postgresql:1.0.0.M7")
     implementation("com.fasterxml.jackson.module:jackson-module-kotlin")
 
     implementation("org.jetbrains.kotlin:kotlin-reflect")

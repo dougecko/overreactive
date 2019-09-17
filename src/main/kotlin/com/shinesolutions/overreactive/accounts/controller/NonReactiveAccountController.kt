@@ -8,9 +8,9 @@ import org.springframework.web.bind.annotation.*
 
 @RestController("/nr/accounts")
 class NonReactiveAccountController(@Autowired val accountService: NonReactiveAccountService) {
-    ///// NON-REACTIVE ENDPOINTS
+
     @GetMapping("/nr/accounts")
-    fun getAccountsList(): List<Account> = accountService.findAll()
+    fun getAccountsList(): Iterable<Account> = accountService.findAll()
 
     @GetMapping("/nr/accounts/{id}")
     fun getAccount(@PathVariable("id") id: Long) = accountService.findOne(id)
@@ -18,4 +18,5 @@ class NonReactiveAccountController(@Autowired val accountService: NonReactiveAcc
     @ResponseStatus(HttpStatus.CREATED)
     @PostMapping("/nr/accounts")
     fun createAccount(@RequestBody account: Account) = accountService.create(account)
+
 }
