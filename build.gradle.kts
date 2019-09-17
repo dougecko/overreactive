@@ -15,23 +15,50 @@ plugins {
 
 group = "com.shinesolutions.poc"
 version = "0.0.1-SNAPSHOT"
-java.sourceCompatibility = JavaVersion.VERSION_1_8
+java.sourceCompatibility = JavaVersion.VERSION_11
 
 repositories {
     mavenCentral()
+//    maven { url = URI("http://repo.spring.io/milestone") }
     maven { url = URI("http://repo.spring.io/libs-milestone") }
 }
 
 dependencies {
-    implementation("org.springframework.boot:spring-boot-starter-webflux")
+    val springVersion = "5.2.0.RC2"
+    val springBootVersion = "2.2.0.M6"
+
+    // Need to go pre-release for reactive transaction support
+    implementation("org.springframework:spring-core:${springVersion}")
+    implementation("org.springframework:spring-aop:${springVersion}")
+    implementation("org.springframework:spring-beans:${springVersion}")
+    implementation("org.springframework:spring-context:${springVersion}")
+    implementation("org.springframework:spring-expression:${springVersion}")
+    implementation("org.springframework:spring-jcl:${springVersion}")
+    implementation("org.springframework:spring-web:${springVersion}")
+//    testImplementation("org.springframework:spring-core:${springVersion}")
+//    testImplementation("org.springframework:spring-test:${springVersion}")
+
+    implementation("org.springframework:spring-webflux:${springVersion}")
+    implementation("org.springframework:spring-tx:${springVersion}")
+    implementation("org.springframework.boot:spring-boot:${springBootVersion}")
+    implementation("org.springframework.boot:spring-boot-autoconfigure:${springBootVersion}")
+    implementation("org.springframework.boot:spring-boot-starter:${springBootVersion}")
+    implementation("org.springframework.boot:spring-boot-starter-logging:${springBootVersion}")
+    implementation("org.springframework.boot:spring-boot-starter-json:${springBootVersion}")
+    implementation("org.springframework.boot:spring-boot-starter-reactor-netty:${springBootVersion}")
+    implementation("org.springframework.boot:spring-boot-starter-webflux:${springBootVersion}")
+    implementation("org.springframework.boot:spring-boot-starter-validation:${springBootVersion}")
+
+//    implementation("org.springframework.data:spring-data-r2dbc:1.0.0.M1")
     implementation("org.springframework.data:spring-data-r2dbc:1.0.0.M2")
+
     implementation("io.r2dbc:r2dbc-postgresql:1.0.0.M7")
     implementation("com.fasterxml.jackson.module:jackson-module-kotlin")
-
     implementation("org.jetbrains.kotlin:kotlin-reflect")
     implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8")
 
-    testImplementation("org.springframework.boot:spring-boot-starter-test") {
+    testImplementation("org.springframework:spring-test:${springVersion}")
+    testImplementation("org.springframework.boot:spring-boot-starter-test:${springBootVersion}") {
         exclude(module = "junit")
     }
     testImplementation("com.nhaarman.mockitokotlin2:mockito-kotlin:2.2.0")
@@ -85,11 +112,16 @@ tasks.test {
             }
         }))
     }
+
+    filter {
+//        includeTestsMatching("*")
+        includeTestsMatching("*IntegrationTests")
+    }
 }
 
 tasks.withType<KotlinCompile> {
     kotlinOptions {
         freeCompilerArgs = listOf("-Xjsr305=strict")
-        jvmTarget = "1.8"
+        jvmTarget = "11"
     }
 }

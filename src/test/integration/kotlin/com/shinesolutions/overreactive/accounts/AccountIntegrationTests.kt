@@ -1,9 +1,7 @@
-package com.shinesolutions.overreactive
+package com.shinesolutions.overreactive.accounts
 
 import com.shinesolutions.overreactive.accounts.controller.AccountController
 import com.shinesolutions.overreactive.accounts.model.Account
-import com.shinesolutions.overreactive.accounts.repository.AccountRepository
-import com.shinesolutions.overreactive.accounts.service.AccountService
 import org.junit.jupiter.api.Assertions
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.extension.ExtendWith
@@ -20,7 +18,7 @@ class AccountIntegrationTests {
     lateinit var accountController: AccountController
 
     @Test
-    fun doStuff() {
+    fun doAllTheStuff() {
         val accounts: Flux<Account> = accountController.getAccountsList()
 
         Assertions.assertEquals(3, accounts.collectList().block()?.size)

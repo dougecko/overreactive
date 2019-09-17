@@ -7,5 +7,5 @@ import org.springframework.boot.runApplication
 class OverreactiveApplication
 
 fun main(args: Array<String>) {
-	runApplication<OverreactiveApplication>(*args)
+    runApplication<OverreactiveApplication>(*args)
 }
