@@ -41,7 +41,7 @@ dependencies {
 }
 
 sourceSets["test"].withConvention(KotlinSourceSet::class) {
-    kotlin.srcDirs("src/test/unit/kotlin", "src/test/integration/kotlin")
+    kotlin.srcDirs("src/test/unit/kotlin", "src/test/integration/kotlin", "src/test/blackbox/kotlin")
 }
 
 tasks.test {
