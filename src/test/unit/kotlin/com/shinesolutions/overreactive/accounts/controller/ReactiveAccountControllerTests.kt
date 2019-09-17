@@ -4,6 +4,7 @@ import com.nhaarman.mockitokotlin2.any
 import com.nhaarman.mockitokotlin2.whenever
 import com.shinesolutions.overreactive.accounts.model.Account
 import com.shinesolutions.overreactive.accounts.service.AccountService
+import com.shinesolutions.overreactive.accounts.service.AccountServiceTests
 import com.shinesolutions.overreactive.exceptions.ResourceNotFoundException
 import org.junit.jupiter.api.Assertions
 import org.junit.jupiter.api.Assertions.assertEquals
@@ -39,18 +40,17 @@ class ReactiveAccountControllerTests {
     fun whenGetAllAccounts_thenReactiveServiceFindAllCalled() {
         whenever(accountService.findAll()).thenReturn(Flux.fromIterable(Account.ACCOUNTS))
         val accounts: Flux<Account> = accountController.getAccountsList()
+        assertEquals(3, accounts.toIterable().count())
 
         verify(accountService).findAll()
-        assertEquals(3, accounts.collectList().block()?.size)
     }
 
     @Test
     fun whenGetIndividualAccount_thenReactiveServiceFindOneCalled() {
         whenever(accountService.findOne(1L)).thenReturn(Mono.just(Account.ACCOUNTS[0]))
         val account: Mono<Account> = accountController.getAccount(1L)
-
-        verify(accountService).findOne(1L)
         assertEquals("Savings Account", account.block()?.name)
+        verify(accountService).findOne(1L)
     }
 
     @Test
