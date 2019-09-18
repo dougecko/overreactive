@@ -19,40 +19,25 @@ java.sourceCompatibility = JavaVersion.VERSION_1_8
 
 repositories {
     mavenCentral()
-//    maven { url = URI("http://repo.spring.io/milestone") }
-    maven { url = URI("http://repo.spring.io/libs-milestone") }
+    maven { url = URI("http://repo.spring.io/milestone") }
 }
 
+// Need to go pre-release for reactive transaction support
+val springVersion = "5.2.0.M2"
+val springBootVersion = "2.2.0.M4"
+
 dependencies {
-    val springVersion = "5.2.0.RC2"
-    val springBootVersion = "2.2.0.M6"
-
-    // Need to go pre-release for reactive transaction support
-    implementation("org.springframework:spring-core:${springVersion}")
-    implementation("org.springframework:spring-aop:${springVersion}")
-    implementation("org.springframework:spring-beans:${springVersion}")
-    implementation("org.springframework:spring-context:${springVersion}")
-    implementation("org.springframework:spring-expression:${springVersion}")
-    implementation("org.springframework:spring-jcl:${springVersion}")
     implementation("org.springframework:spring-web:${springVersion}")
-//    testImplementation("org.springframework:spring-core:${springVersion}")
-//    testImplementation("org.springframework:spring-test:${springVersion}")
-
     implementation("org.springframework:spring-webflux:${springVersion}")
-    implementation("org.springframework:spring-tx:${springVersion}")
-    implementation("org.springframework.boot:spring-boot:${springBootVersion}")
-    implementation("org.springframework.boot:spring-boot-autoconfigure:${springBootVersion}")
-    implementation("org.springframework.boot:spring-boot-starter:${springBootVersion}")
-    implementation("org.springframework.boot:spring-boot-starter-logging:${springBootVersion}")
-    implementation("org.springframework.boot:spring-boot-starter-json:${springBootVersion}")
-    implementation("org.springframework.boot:spring-boot-starter-reactor-netty:${springBootVersion}")
-    implementation("org.springframework.boot:spring-boot-starter-webflux:${springBootVersion}")
-    implementation("org.springframework.boot:spring-boot-starter-validation:${springBootVersion}")
+    implementation("org.springframework.boot:spring-boot-starter-webflux:${springBootVersion}") {
+        exclude(module = "spring-web")
+        exclude(module = "spring-webflux")
+    }
 
-//    implementation("org.springframework.data:spring-data-r2dbc:1.0.0.M1")
+    implementation("org.springframework.data:spring-data-relational:1.1.0.M4")
     implementation("org.springframework.data:spring-data-r2dbc:1.0.0.M2")
-
     implementation("io.r2dbc:r2dbc-postgresql:1.0.0.M7")
+
     implementation("com.fasterxml.jackson.module:jackson-module-kotlin")
     implementation("org.jetbrains.kotlin:kotlin-reflect")
     implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8")
@@ -65,6 +50,19 @@ dependencies {
     testImplementation("org.junit.jupiter:junit-jupiter:5.5.2")
     testImplementation("org.mockito:mockito-junit-jupiter:3.0.0")
     testImplementation("io.projectreactor:reactor-test")
+}
+
+configurations.all {
+    resolutionStrategy.eachDependency {
+        if (requested.group =="org.springframework") {
+            useTarget("${requested.group}:${requested.name}:${springVersion}")
+            because("require spring* version $springVersion")
+        }
+        if (requested.group =="org.springframework.boot") {
+            useTarget("${requested.group}:${requested.name}:${springBootVersion}")
+            because("require spring-boot* version $springBootVersion")
+        }
+    }
 }
 
 sourceSets["test"].withConvention(KotlinSourceSet::class) {
@@ -80,8 +78,7 @@ tasks.test {
         events = mutableSetOf(
                 TestLogEvent.FAILED,
                 TestLogEvent.PASSED,
-                TestLogEvent.SKIPPED//,
-        //        TestLogEvent.STANDARD_OUT
+                TestLogEvent.SKIPPED
         )
         exceptionFormat = TestExceptionFormat.FULL
         showExceptions = true
