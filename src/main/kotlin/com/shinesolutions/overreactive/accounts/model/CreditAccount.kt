@@ -1,7 +1,7 @@
 package com.shinesolutions.overreactive.accounts.model
 
 import org.springframework.data.relational.core.mapping.Table
-import java.time.LocalDate
+import java.time.Instant
 
 @Table("credit_account")
 data class CreditAccount(
@@ -10,7 +10,7 @@ data class CreditAccount(
         override val name: String,
         override val type: AccountType = AccountType.CREDIT,
         override var balance: Float,
-        override val dateOpened: LocalDate,
+        override val dateOpened: Instant,
         var statement: Statement,
         var hasRewards: Boolean,
         val accountNumber: String

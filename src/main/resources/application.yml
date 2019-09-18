@@ -6,14 +6,3 @@ spring:
       database: overreactive
       username: test
       password: test
-#
-#  datasource:
-#    dbcp2:
-#      url: jdbc:postgresql://localhost:5432/overreactive
-#      username: test
-#      password: test
-
-  jpa:
-    generate-ddl: true
-    hibernate:
-      ddl-auto: create-drop

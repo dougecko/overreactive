@@ -33,6 +33,7 @@ dependencies {
         exclude(module = "spring-web")
         exclude(module = "spring-webflux")
     }
+//    implementation("org.springframework.boot:spring-boot-starter-data-jpa:$springBootVersion")
 
     implementation("org.springframework.data:spring-data-relational:1.1.0.M4")
     implementation("org.springframework.data:spring-data-r2dbc:1.0.0.M2")
@@ -112,7 +113,7 @@ tasks.test {
 
     filter {
 //        includeTestsMatching("*")
-        excludeTestsMatching("*IntegrationTests")
+//        excludeTestsMatching("*IntegrationTests")
     }
 }
 

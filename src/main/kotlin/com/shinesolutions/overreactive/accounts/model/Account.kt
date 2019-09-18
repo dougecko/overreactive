@@ -3,8 +3,7 @@ package com.shinesolutions.overreactive.accounts.model
 import com.fasterxml.jackson.annotation.JsonSubTypes
 import com.fasterxml.jackson.annotation.JsonTypeInfo
 import org.springframework.data.relational.core.mapping.Table
-import java.time.LocalDate
-import java.time.format.DateTimeFormatter
+import java.time.Instant
 
 @Table("account")
 @JsonTypeInfo(use = JsonTypeInfo.Id.NAME, include = JsonTypeInfo.As.PROPERTY, property = "type", visible = true)
@@ -13,10 +12,10 @@ import java.time.format.DateTimeFormatter
         JsonSubTypes.Type(value = CreditAccount::class, name = "CREDIT"),
         JsonSubTypes.Type(value = HomeLoanAccount::class, name = "HOME_LOAN")
 )
-abstract class Account(open val id: Long?, open val name: String, open val type: AccountType, open val balance: Float, open val dateOpened: LocalDate) {
+abstract class Account(open val id: Long?, open val name: String, open val type: AccountType, open val balance: Float, open val dateOpened: Instant) {
 
     companion object {
-        private fun getLocalDate(date: String) = LocalDate.parse(date, DateTimeFormatter.ISO_DATE)
+        private fun getLocalDate(date: String) = Instant.parse(date)
 
         private val STATEMENT = Statement(balance = 3000.00F, dueDate = getLocalDate("2018-09-13"))
 
