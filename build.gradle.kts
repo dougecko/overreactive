@@ -112,7 +112,7 @@ tasks.test {
 
     filter {
 //        includeTestsMatching("*")
-        includeTestsMatching("*IntegrationTests")
+        excludeTestsMatching("*IntegrationTests")
     }
 }
 
