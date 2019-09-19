@@ -1,5 +1,4 @@
 drop table if exists account;
-
 create table account
 (
     id          serial primary key,
@@ -7,4 +6,11 @@ create table account
     type        varchar(50),
     balance     float,
     date_opened timestamp
+);
+
+drop table if exists thing;
+create table thing
+(
+    id          serial primary key,
+    name        varchar(255)
 );

@@ -27,6 +27,8 @@ val springVersion = "5.2.0.M2"
 val springBootVersion = "2.2.0.M4"
 
 dependencies {
+    implementation("org.projectlombok:lombok")
+
     implementation("org.springframework:spring-web:${springVersion}")
     implementation("org.springframework:spring-webflux:${springVersion}")
     implementation("org.springframework.boot:spring-boot-starter-webflux:${springBootVersion}") {
@@ -35,6 +37,9 @@ dependencies {
     }
 //    implementation("org.springframework.boot:spring-boot-starter-data-jpa:$springBootVersion")
 
+    implementation("org.springframework:spring-jdbc:${springVersion}")
+
+    implementation("org.springframework.boot.experimental:spring-boot-starter-data-r2dbc:0.1.0.M1")
     implementation("org.springframework.data:spring-data-relational:1.1.0.M4")
     implementation("org.springframework.data:spring-data-r2dbc:1.0.0.M2")
     implementation("io.r2dbc:r2dbc-postgresql:1.0.0.M7")

@@ -6,3 +6,8 @@ spring:
       database: overreactive
       username: test
       password: test
+
+  r2dbc:
+    url: r2dbc:postgresql://localhost/overreactive
+    username: test
+    password: test
