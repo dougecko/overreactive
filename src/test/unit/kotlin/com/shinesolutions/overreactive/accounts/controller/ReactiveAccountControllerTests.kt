@@ -1,6 +1,6 @@
 package com.shinesolutions.overreactive.accounts.controller
 
-import com.shinesolutions.overreactive.accounts.service.ReactiveAccountService
+import com.shinesolutions.overreactive.accounts.repository.ReactiveAccountRepository
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.extension.ExtendWith
 import org.mockito.Mock
@@ -13,14 +13,14 @@ import org.springframework.test.context.junit.jupiter.SpringExtension
 class ReactiveAccountControllerTests {
 
     @Mock
-    lateinit var accountService: ReactiveAccountService
+    lateinit var accountRepository: ReactiveAccountRepository
 
     @Autowired
     lateinit var accountController: ReactiveAccountController
 
     @BeforeEach
     fun init() {
-        accountController = ReactiveAccountController(accountService)
+        accountController = ReactiveAccountController(accountRepository)
 //        Account.resetAccounts()
     }
 
