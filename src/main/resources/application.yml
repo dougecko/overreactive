@@ -1,27 +1,3 @@
-spring:
-#    data:
-#      postgres:
-#        port: 5432
-#        host: localhost
-#        database: overreactive
-#        username: test
-#        password: test
-
-#  datasource:
-#    platform: postgresql
-#    initialization-mode: always
-#    url: jdbc:postgres://localhost:5432/overreactive
-#    username: test
-#    password: test
-#    driver-class-name: org.postgresql.Driver
-  #    data: /db/data.sql
-  #    schema: /db/schema.sql
-
-  r2dbc:
-    url: r2dbc:postgresql://locahost:5432/overreactive
-    username: test
-    password: test
-
 postgres:
   port: 5432
   host: localhost
