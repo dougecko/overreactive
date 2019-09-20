@@ -21,13 +21,13 @@ jobs:
       - run: sudo apt-get install postgresql-client
       - run: |
           psql -a \
-          -d $POSTGRES_URL
-          -U $POSTGRES_USER
+          -d $POSTGRES_URL \
+          -U $POSTGRES_USER \
           -f "src/main/resources/db/schema.sql"
       - run: |
           psql -a \
-          -d $POSTGRES_URL
-          -U $POSTGRES_USER
+          -d $POSTGRES_URL \
+          -U $POSTGRES_USER \
           -f "src/main/resources/db/data.sql"
       # Read about caching dependencies: https://circleci.com/docs/2.0/caching/
       - restore_cache:
