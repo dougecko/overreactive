@@ -9,6 +9,7 @@ jobs:
       - image: circleci/openjdk:11.0.4-jdk-stretch # ...with this image as the primary container; this is where all `steps` will run
         environment:
           POSTGRES_URL: postgresql://test@localhost/overreactive
+          POSTGRES_USER: test
           PGPASSWORD: test
       - image: circleci/postgres:9.6.5-alpine-ram
         environment:
