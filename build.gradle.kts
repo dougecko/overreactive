@@ -126,7 +126,8 @@ tasks.test {
         events = mutableSetOf(
                 TestLogEvent.FAILED,
                 TestLogEvent.PASSED,
-                TestLogEvent.SKIPPED
+                TestLogEvent.SKIPPED,
+                TestLogEvent.STANDARD_OUT
         )
         exceptionFormat = TestExceptionFormat.FULL
         showExceptions = true
