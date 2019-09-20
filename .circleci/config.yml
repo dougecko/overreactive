@@ -10,24 +10,25 @@ jobs:
         environment:
           POSTGRES_URL: postgresql://test@localhost/overreactive
           PGPASSWORD: test
-      - image: circleci/postgres:12-alpine
+      - image: circleci/postgres:9.6.5-alpine-ram
         environment:
           POSTGRES_DB: overreactive
           POSTGRES_USER: test
           POSTGRES_PASS: test
-
     steps:
       - checkout # check out the code in the project directory
       - run: sudo apt-get update
-      - run: sudo apt-get install -y postgresql-client
+      - run: sudo apt-get install postgresql-client-9.6
       - run: |
           psql -a \
-          -d $POSTGRES_URL
+          -d $POSTGRES_URL \
+          -U $POSTGRES_USER \
           -f "src/main/resources/db/schema.sql"
       - run: |
           psql -a \
-          -d $POSTGRES_URL
-          -f "src/main/resources/db/insert.sql"
+          -d $POSTGRES_URL \
+          -U $POSTGRES_USER \
+          -f "src/main/resources/db/data.sql"
       # Read about caching dependencies: https://circleci.com/docs/2.0/caching/
       - restore_cache:
           key: v1-gradle-wrapper-{{ checksum "gradle/wrapper/gradle-wrapper.properties" }}
