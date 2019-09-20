@@ -2,7 +2,6 @@ package com.shinesolutions.overreactive.accounts.service
 
 import com.nhaarman.mockitokotlin2.whenever
 import com.shinesolutions.overreactive.accounts.model.Account
-import com.shinesolutions.overreactive.accounts.repository.AccountRepository
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.extension.ExtendWith
 import org.mockito.Mock
