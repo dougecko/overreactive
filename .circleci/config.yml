@@ -20,11 +20,10 @@ jobs:
       - checkout # check out the code in the project directory
       - run: sudo apt-get update
       - run: sudo apt-get install postgresql-client-9.6
-      - run: psql -a -d $POSTGRES_URL -U $POSTGRES_USER < src/main/resources/db/schema.sql
-#      - run: |
-#          psql -a -d $POSTGRES_URL -U $POSTGRES_USER -f "src/main/resources/db/schema.sql"
-#      - run: |
-#          psql -a -d $POSTGRES_URL -U $POSTGRES_USER -f "src/main/resources/db/data.sql"
+      - run: |
+          psql -a -d $POSTGRES_URL -U $POSTGRES_USER -f "src/main/resources/db/schema.sql"
+      - run: |
+          psql -a -d $POSTGRES_URL -U $POSTGRES_USER -f "src/main/resources/db/data.sql"
       # Read about caching dependencies: https://circleci.com/docs/2.0/caching/
       - restore_cache:
           key: v1-gradle-wrapper-{{ checksum "gradle/wrapper/gradle-wrapper.properties" }}
