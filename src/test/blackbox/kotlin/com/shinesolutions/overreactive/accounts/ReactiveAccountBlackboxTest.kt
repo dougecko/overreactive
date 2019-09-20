@@ -35,4 +35,18 @@ class ReactiveAccountBlackboxTest(@Autowired var webTestClient: WebTestClient) {
                 }
                 .jsonPath("$.length()", 3)
     }
+
+    @Test
+    fun testGetAccountById() {
+        webTestClient.get()
+                .uri("/reactive/accounts/2")
+                .accept(MediaType.APPLICATION_JSON)
+                .exchange()
+                .expectStatus().isOk
+                .expectBody()
+                .consumeWith {response ->
+                    Assertions.assertThat(response.responseBody).isNotNull()
+                }
+                .jsonPath("$.name", "My Platinum Reward VISA")
+    }
 }
