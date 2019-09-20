@@ -10,7 +10,7 @@ jobs:
         environment:
           POSTGRES_URL: postgresql://test@localhost/overreactive
           PGPASSWORD: test
-      - image: circleci/postgres:11-alpine
+      - image: circleci/postgres:9.6.5-alpine-ram
         environment:
           POSTGRES_DB: overreactive
           POSTGRES_USER: test
@@ -18,7 +18,7 @@ jobs:
     steps:
       - checkout # check out the code in the project directory
       - run: sudo apt-get update
-      - run: sudo apt-get install postgresql-11
+      - run: sudo apt-get install postgresql-client-9.6
       - run: |
           psql -a \
           -d $POSTGRES_URL \
