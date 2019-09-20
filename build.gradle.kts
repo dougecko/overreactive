@@ -17,8 +17,6 @@ plugins {
     id("io.spring.dependency-management") version "1.0.8.RELEASE"
     kotlin("jvm") version "1.3.50"
     kotlin("plugin.spring") version "1.3.50"
-    kotlin("plugin.jpa") version "1.3.50"
-    kotlin("plugin.allopen") version "1.3.50"
 }
 
 group = "com.shinesolutions"
@@ -40,7 +38,6 @@ repositories {
 
 dependencies {
     implementation("org.springframework.data:spring-data-r2dbc:$r2dbcVersion")
-    implementation("org.springframework.boot:spring-boot-dependencies:2.2.0.M4")
 
     implementation("org.springframework.boot:spring-boot-starter-webflux")
 
@@ -84,12 +81,6 @@ tasks.withType<KotlinCompile> {
         freeCompilerArgs = listOf("-Xjsr305=strict")
         jvmTarget = "1.8"
     }
-}
-
-allOpen {
-    annotation("javax.persistence.Entity")
-    annotation("javax.persistence.Embeddable")
-    annotation("javax.persistence.MappedSuperclass")
 }
 
 tasks.test {

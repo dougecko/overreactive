@@ -1,5 +1,6 @@
 package com.shinesolutions.overreactive.accounts
 
+import com.shinesolutions.overreactive.accounts.model.AccountType
 import org.assertj.core.api.Assertions
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
@@ -47,6 +48,8 @@ class ReactiveAccountBlackboxTest(@Autowired var webTestClient: WebTestClient) {
                 .consumeWith {response ->
                     Assertions.assertThat(response.responseBody).isNotNull()
                 }
-                .jsonPath("$.name", "My Platinum Reward VISA")
+                .jsonPath("$.name").isEqualTo("My Platinum Reward VISA")
+                .jsonPath("$.type").isEqualTo("CREDIT")
+                .jsonPath("$.balance").isEqualTo(-2000f)
     }
 }
