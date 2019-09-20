@@ -3,25 +3,22 @@ import org.gradle.api.tasks.testing.logging.TestLogEvent
 import org.jetbrains.kotlin.gradle.plugin.KotlinSourceSet
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
-//import java.net.URI
-
 // Need to go pre-release for reactive transaction support
-val kotlinVersion = "1.3.31"
+val kotlinVersion = "1.3.50"
 val r2dbcVersion = "1.0.0.M1"
 val r2dbcSpiVersion = "1.0.0.M7"
 val r2dbcPostgresVersion = "1.0.0.M7"
-//val springVersion = "5.2.0.M2"
-val springBootVersion = "2.2.0.M2"  // Doesn't work with springframework greater than 2.2.0.M4
-val ktCoroutinesVersion = "1.2.1"
+val springBootVersion = "2.2.0.M6"
+val ktCoroutinesVersion = "1.2.2"
 val junitVersion = "5.5.2"
 
 plugins {
-    id("org.springframework.boot") version "2.2.0.M2"
+    id("org.springframework.boot") version "2.2.0.M6"
     id("io.spring.dependency-management") version "1.0.8.RELEASE"
-    kotlin("jvm") version "1.3.31"
-    kotlin("plugin.spring") version "1.3.31"
-    kotlin("plugin.jpa") version "1.3.31"
-    kotlin("plugin.allopen") version "1.3.31"
+    kotlin("jvm") version "1.3.50"
+    kotlin("plugin.spring") version "1.3.50"
+    kotlin("plugin.jpa") version "1.3.50"
+    kotlin("plugin.allopen") version "1.3.50"
 }
 
 group = "com.shinesolutions"
@@ -95,28 +92,6 @@ allOpen {
     annotation("javax.persistence.MappedSuperclass")
 }
 
-configurations.all {
-    resolutionStrategy.eachDependency {
-        //        if (requested.group == "org.jetbrains.kotlinx") {
-//            useTarget("${requested.group}:${requested.name}:$ktCoroutinesVersion")
-//            because("require org.jetbrains.kotlinx* version $ktCoroutinesVersion")
-//        }
-//        if (requested.group == "org.springframework") {
-//            useTarget("${requested.group}:${requested.name}:${springVersion}")
-//            because("require spring* version $springVersion")
-//        }
-//        if (requested.group == "org.springframework.boot") {
-//            useTarget("${requested.group}:${requested.name}:${springBootVersion}")
-//            because("require spring-boot* version $springBootVersion")
-//        }
-//        if (requested.group == "io.netty" && requested.name == "netty-codec") {
-//            useTarget("${requested.group}:${requested.name}:$nettyVersion")
-//            because("require io.netty* version $nettyVersion")
-//        }
-    }
-}
-//
-//
 tasks.test {
     useJUnitPlatform {
         includeEngines("junit-jupiter")
@@ -126,8 +101,7 @@ tasks.test {
         events = mutableSetOf(
                 TestLogEvent.FAILED,
                 TestLogEvent.PASSED,
-                TestLogEvent.SKIPPED,
-                TestLogEvent.STANDARD_OUT
+                TestLogEvent.SKIPPED
         )
         exceptionFormat = TestExceptionFormat.FULL
         showExceptions = true
@@ -158,9 +132,4 @@ tasks.test {
             }
         }))
     }
-
-//    filter {
-//        includeTestsMatching("*")
-//        excludeTestsMatching("*IntegrationTests")
-//    }
 }
