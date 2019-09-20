@@ -4,11 +4,13 @@ import com.shinesolutions.overreactive.accounts.model.Account
 import com.shinesolutions.overreactive.accounts.repository.ReactiveAccountRepository
 import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.PathVariable
+import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RestController
 import reactor.core.publisher.Flux
 import reactor.core.publisher.Mono
 
-@RestController("/reactive/accounts")
+@RestController
+@RequestMapping("/reactive/accounts")
 class ReactiveAccountController(private val accountRepository: ReactiveAccountRepository) {
 
     @GetMapping

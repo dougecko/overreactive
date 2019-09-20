@@ -13,7 +13,7 @@ import java.time.Duration
 
 @ExtendWith(SpringExtension::class)
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
-class AccountBlackboxTest(@Autowired var webTestClient: WebTestClient) {
+class ReactiveAccountBlackboxTest(@Autowired var webTestClient: WebTestClient) {
 
     @BeforeEach
     fun setup() {
@@ -25,8 +25,8 @@ class AccountBlackboxTest(@Autowired var webTestClient: WebTestClient) {
     @Test
     fun testGetAllAccounts() {
         webTestClient.get()
-                .uri("/accounts")
-                .accept(MediaType.TEXT_EVENT_STREAM)
+                .uri("/reactive/accounts")
+                .accept(MediaType.APPLICATION_JSON)
                 .exchange()
                 .expectStatus().isOk
                 .expectBody()
