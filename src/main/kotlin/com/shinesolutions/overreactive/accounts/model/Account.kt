@@ -3,7 +3,7 @@ package com.shinesolutions.overreactive.accounts.model
 import org.springframework.data.annotation.Id
 import java.time.Instant
 
-class Account(
+data class Account(
         @Id
         var id: Long? = null,
         var name: String = "",

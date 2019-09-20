@@ -18,7 +18,7 @@ jobs:
     steps:
       - checkout # check out the code in the project directory
       - run: sudo apt-get update
-      - run: sudo apt-get install postgresql-client
+      - run: sudo apt-get install -y postgresql-client
       - run: |
           psql -a \
           -d $POSTGRES_URL
@@ -32,7 +32,7 @@ jobs:
           key: v1-gradle-wrapper-{{ checksum "gradle/wrapper/gradle-wrapper.properties" }}
       - restore_cache:
           key: v1-gradle-cache-{{ checksum "build.gradle.kts" }}
-      - run: ./gradlew clean build test
+      - run: ./gradlew clean build
       - run:
           name: Save test results
           command: |

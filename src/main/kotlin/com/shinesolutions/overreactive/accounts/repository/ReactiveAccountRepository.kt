@@ -1,12 +1,12 @@
 package com.shinesolutions.overreactive.accounts.repository
 
 import com.shinesolutions.overreactive.accounts.model.Account
+import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.FlowPreview
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.reactive.flow.asFlow
+import kotlinx.coroutines.reactive.asFlow
 import org.springframework.data.r2dbc.function.DatabaseClient
 import org.springframework.stereotype.Repository
-import reactor.core.publisher.Flux
 import reactor.core.publisher.Mono
 
 @Repository
@@ -21,13 +21,15 @@ class ReactiveAccountRepository(private val client: DatabaseClient) {
                 .one()
     }
 
+    @ExperimentalCoroutinesApi
     @FlowPreview
-    suspend fun findAll(): Flow<Account> {
+    fun findAll(): Flow<Account> {
         return client.select()
                 .from("account")
                 .`as`(Account::class.java)
                 .fetch()
                 .all()
+                .log()
                 .asFlow()
     }
 }
