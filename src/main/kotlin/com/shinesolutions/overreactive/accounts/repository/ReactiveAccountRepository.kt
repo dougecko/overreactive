@@ -12,7 +12,7 @@ class ReactiveAccountRepository(private val client: DatabaseClient) {
     fun getAccountById(id: Long): Mono<Account> {
         return client.execute()
                 .sql("SELECT * FROM account WHERE id = $1")
-                .bind(0, id)
+                .bind("$1", id)
                 .`as`(Account::class.java)
                 .fetch()
                 .one()
