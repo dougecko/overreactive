@@ -15,11 +15,10 @@ jobs:
           POSTGRES_DB: overreactive
           POSTGRES_USER: test
           POSTGRES_PASS: test
-
     steps:
       - checkout # check out the code in the project directory
       - run: sudo apt-get update
-      - run: sudo apt-get install -y postgresql-client
+      - run: sudo apt-get install postgresql-client
       - run: |
           psql -a \
           -d $POSTGRES_URL
@@ -27,7 +26,7 @@ jobs:
       - run: |
           psql -a \
           -d $POSTGRES_URL
-          -f "src/main/resources/db/insert.sql"
+          -f "src/main/resources/db/data.sql"
       # Read about caching dependencies: https://circleci.com/docs/2.0/caching/
       - restore_cache:
           key: v1-gradle-wrapper-{{ checksum "gradle/wrapper/gradle-wrapper.properties" }}
