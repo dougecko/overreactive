@@ -22,11 +22,13 @@ jobs:
       - run: |
           psql -a \
           -d $POSTGRES_URL
+          -U $PGPASSWORD
           -f "src/main/resources/db/schema.sql"
       - run: |
           psql -a \
           -d $POSTGRES_URL
-          -f "src/main/resources/db/insert.sql"
+          -U $PGPASSWORD
+          -f "src/main/resources/db/data.sql"
       # Read about caching dependencies: https://circleci.com/docs/2.0/caching/
       - restore_cache:
           key: v1-gradle-wrapper-{{ checksum "gradle/wrapper/gradle-wrapper.properties" }}
