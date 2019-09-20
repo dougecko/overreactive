@@ -1,16 +1,26 @@
 package com.shinesolutions.overreactive.accounts.controller
 
 import com.shinesolutions.overreactive.accounts.model.Account
-import com.shinesolutions.overreactive.accounts.repository.ReactiveAccountRepository
+import com.shinesolutions.overreactive.accounts.repository.AccountRepository
 import kotlinx.coroutines.FlowPreview
 import kotlinx.coroutines.flow.Flow
+import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.web.bind.annotation.GetMapping
+import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RestController
-import reactor.core.publisher.Flux
+import org.springframework.web.reactive.function.client.WebClient
 
-@RestController("/reactive/accounts")
-class ReactiveAccountController(private val accountRepository: ReactiveAccountRepository) {
+@RestController
+@RequestMapping("/accounts")
+class AccountController() {
 
+    @Autowired
+    lateinit var webClient: WebClient
+
+    @Autowired
+    lateinit var accountRepository: AccountRepository
+
+    ///// REACTIVE ENDPOINTS
     @FlowPreview
     @GetMapping
     suspend fun getAccountsList(): Flow<Account> = accountRepository.findAll()
