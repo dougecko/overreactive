@@ -1,6 +1,6 @@
 package com.shinesolutions.overreactive.accounts
 
-import com.shinesolutions.overreactive.accounts.controller.AccountController
+import com.shinesolutions.overreactive.accounts.controller.ReactiveAccountController
 import com.shinesolutions.overreactive.accounts.model.Account
 import org.junit.jupiter.api.Assertions
 import org.junit.jupiter.api.Test
@@ -15,11 +15,15 @@ import reactor.core.publisher.Flux
 class AccountIntegrationTests {
 
     @Autowired
-    lateinit var accountController: AccountController
+    lateinit var accountController: ReactiveAccountController
 
     @Test
     fun doAllTheStuff() {
         val accounts: Flux<Account> = accountController.getAccountsList()
+
+        val accountList = accounts
+                .doOnNext { account -> println(account.toString()) }
+                .doOnComplete { println("I'm done") }
 
         Assertions.assertEquals(3, accounts.collectList().block()?.size)
     }
