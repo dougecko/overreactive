@@ -1,6 +1,5 @@
 package com.shinesolutions.overreactive.accounts
 
-import com.shinesolutions.overreactive.accounts.model.AccountType
 import org.assertj.core.api.Assertions
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
