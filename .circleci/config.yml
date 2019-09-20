@@ -9,10 +9,22 @@ jobs:
       - image: circleci/openjdk:11.0.4-jdk-stretch # ...with this image as the primary container; this is where all `steps` will run
       - image: circleci/postgres:12-alpine
         environment:
-          POSTGRES_USER: postgres
+          POSTGRES_URL: postgresql://test@localhost/overreactive
           POSTGRES_DB: overreactive
+          POSTGRES_USER: test
+          POSTGRES_PASS: test
     steps:
       - checkout # check out the code in the project directory
+      - run: sudo apt-get update
+      - run: sudo apt-get install postgresql-client-12
+      - run: |
+          psql \
+          -d $POSTGRES_URL
+          -f "src/main/resources/db/schema.sql"
+      - run: |
+          psql \
+          -d $POSTGRES_URL
+          -f "src/main/resources/db/insert.sql"
       # Read about caching dependencies: https://circleci.com/docs/2.0/caching/
       - restore_cache:
           key: v1-gradle-wrapper-{{ checksum "gradle/wrapper/gradle-wrapper.properties" }}
