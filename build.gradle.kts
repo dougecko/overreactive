@@ -9,7 +9,7 @@ val r2dbcVersion = "1.0.0.M1"
 val r2dbcSpiVersion = "1.0.0.M7"
 val r2dbcPostgresVersion = "1.0.0.M7"
 val springBootVersion = "2.2.0.M6"
-val ktCoroutinesVersion = "1.2.2"
+val ktCoroutinesVersion = "1.3.2"
 val junitVersion = "5.5.2"
 
 plugins {
