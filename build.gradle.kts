@@ -60,6 +60,7 @@ dependencies {
     testImplementation("org.junit.jupiter:junit-jupiter-engine")
     testImplementation("io.projectreactor:reactor-test")
     testImplementation("com.nhaarman.mockitokotlin2:mockito-kotlin:2.2.0")
+    testImplementation("org.postgresql:postgresql:42.2.8")
 }
 
 dependencyManagement {

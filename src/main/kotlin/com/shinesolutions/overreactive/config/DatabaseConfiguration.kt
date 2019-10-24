@@ -9,7 +9,10 @@ import org.springframework.context.annotation.Configuration
 import org.springframework.data.r2dbc.config.AbstractR2dbcConfiguration
 import org.springframework.data.r2dbc.function.DatabaseClient
 import org.springframework.data.r2dbc.repository.config.EnableR2dbcRepositories
-
+import org.springframework.jdbc.datasource.SimpleDriverDataSource
+import java.sql.Connection
+import java.sql.DriverManager
+import javax.sql.DataSource
 
 @Configuration
 @EnableR2dbcRepositories
@@ -35,5 +38,10 @@ class DatabaseConfiguration(
                         .password(password)
                         .build()
         )
+    }
+
+    @Bean
+    fun connection(): Connection {
+        return DriverManager.getConnection("jdbc:postgresql://$host:$port/$database", username, password)
     }
 }
