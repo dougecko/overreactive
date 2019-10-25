@@ -1,5 +1,6 @@
 package com.shinesolutions.overreactive.accounts
 
+import com.shinesolutions.config.DatabaseConfig
 import com.shinesolutions.overreactive.accounts.model.Account
 import com.shinesolutions.overreactive.accounts.model.AccountType
 import org.assertj.core.api.Assertions
@@ -9,6 +10,7 @@ import org.junit.jupiter.api.extension.ExtendWith
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.beans.factory.annotation.Value
 import org.springframework.boot.test.context.SpringBootTest
+import org.springframework.context.annotation.Import
 import org.springframework.core.io.Resource
 import org.springframework.http.MediaType
 import org.springframework.jdbc.datasource.init.ScriptUtils
@@ -19,9 +21,10 @@ import java.sql.Connection
 import java.time.Duration
 import java.time.Instant
 
+@Import(DatabaseConfig::class)
 @ExtendWith(SpringExtension::class)
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
-class ReactiveAccountBlackboxTest(@Autowired var webTestClient: WebTestClient, @Autowired val connection: Connection) {
+class ReactiveAccountBlackboxTest(@Autowired var webTestClient: WebTestClient, @Autowired var connection: Connection) {
 
     @Value("classpath:db/schema.sql")
     lateinit var schemaResource: Resource

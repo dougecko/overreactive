@@ -2,17 +2,15 @@ package com.shinesolutions.overreactive.config
 
 import io.r2dbc.postgresql.PostgresqlConnectionConfiguration
 import io.r2dbc.postgresql.PostgresqlConnectionFactory
+import io.r2dbc.spi.Connection
 import io.r2dbc.spi.ConnectionFactory
+import org.reactivestreams.Publisher
 import org.springframework.beans.factory.annotation.Value
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
 import org.springframework.data.r2dbc.config.AbstractR2dbcConfiguration
 import org.springframework.data.r2dbc.function.DatabaseClient
 import org.springframework.data.r2dbc.repository.config.EnableR2dbcRepositories
-import org.springframework.jdbc.datasource.SimpleDriverDataSource
-import java.sql.Connection
-import java.sql.DriverManager
-import javax.sql.DataSource
 
 @Configuration
 @EnableR2dbcRepositories
@@ -41,7 +39,7 @@ class DatabaseConfiguration(
     }
 
     @Bean
-    fun connection(): Connection {
-        return DriverManager.getConnection("jdbc:postgresql://$host:$port/$database", username, password)
+    fun getConnection(): Publisher<out Connection> {
+        return connectionFactory().create()
     }
 }
